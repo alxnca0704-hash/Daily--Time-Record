@@ -1,8 +1,8 @@
 <div class="card">
-    <h2>Manage Employee</h2>
+    <h2><i class="ph-bold ph-user-plus" style="margin-right: 8px;"></i> Manage Employee</h2>
     
     <form action="logic/process-employee.php" method="POST">
-        <div class="section-title">Add / Edit Employee</div>
+        <div class="section-title"><i class="ph-bold ph-identification-card" style="margin-right: 8px;"></i> Add / Edit Employee</div>
         
         <div class="grid">
             <div class="form-group">
@@ -58,14 +58,23 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="padding: 10px; border: 1px solid var(--border-color);">Doe, John</td>
-                <td style="padding: 10px; border: 1px solid var(--border-color);">101</td>
-                <td style="padding: 10px; border: 1px solid var(--border-color);">Regular</td>
-                <td style="padding: 10px; border: 1px solid var(--border-color);">
-                    <a href="#" style="color: var(--accent-color);">Edit</a>
-                </td>
-            </tr>
+            <?php if (empty($_SESSION['employees'])): ?>
+                <tr>
+                    <td colspan="4" style="padding: 20px; text-align: center; color: var(--text-muted);">No employees added yet.</td>
+                </tr>
+            <?php else: ?>
+                <?php foreach ($_SESSION['employees'] as $emp): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($emp['name']); ?></td>
+                        <td><?php echo htmlspecialchars($emp['id_num']); ?></td>
+                        <td><?php echo htmlspecialchars($emp['employee_type']); ?></td>
+                        <td>
+                            <a href="index.php?page=edit-employee&id=<?php echo $emp['id']; ?>" style="color: var(--primary-color); font-weight: 700; margin-right: 10px;">Edit</a>
+                            <a href="logic/process-delete-employee.php?id=<?php echo $emp['id']; ?>" style="color: var(--error-color); font-weight: 700;" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

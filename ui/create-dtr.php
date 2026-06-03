@@ -13,9 +13,10 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>Date Range:</label>
-                <input type="text" name="date_range" id="date_range" placeholder="Select Date Range..." required>
+            <div class="form-group" style="grid-column: span 2;">
+                <label>Select Date Range:</label>
+                <div id="date_range_container" class="inline-picker-container"></div>
+                <input type="hidden" name="date_range" id="date_range" required>
             </div>
         </div>
 
@@ -97,11 +98,13 @@ document.getElementById('report_type').addEventListener('change', function() {
     }
 });
 
-flatpickr("#date_range", {
+flatpickr("#date_range_container", {
     mode: "range",
+    inline: true,
     dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "F j, Y"
+    onChange: function(selectedDates, dateStr, instance) {
+        document.getElementById('date_range').value = dateStr;
+    }
 });
 
 flatpickr("#adjustment_datetime_container", {

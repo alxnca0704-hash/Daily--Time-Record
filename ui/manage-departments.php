@@ -30,11 +30,35 @@
                 <div class="time-grid" style="margin-top: 10px;">
                     <div class="form-group">
                         <label>Arrival:</label>
-                        <input type="text" name="am_arrival" class="timepicker" value="08:00">
+                        <div class="custom-time-selection">
+                            <select name="am_arrival_h" class="time-select">
+                                <?php for($i=1; $i<=12; $i++) echo "<option value='".sprintf("%02d", $i)."' ".($i==8 ? "selected" : "").">$i</option>"; ?>
+                            </select>
+                            <span>:</span>
+                            <select name="am_arrival_m" class="time-select">
+                                <?php for($i=0; $i<=55; $i+=5) echo "<option value='".sprintf("%02d", $i)."'>".sprintf("%02d", $i)."</option>"; ?>
+                            </select>
+                            <select name="am_arrival_ap" class="time-select">
+                                <option value="AM" selected>AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Departure:</label>
-                        <input type="text" name="am_departure" class="timepicker" value="12:00">
+                        <div class="custom-time-selection">
+                            <select name="am_departure_h" class="time-select">
+                                <?php for($i=1; $i<=12; $i++) echo "<option value='".sprintf("%02d", $i)."' ".($i==12 ? "selected" : "").">$i</option>"; ?>
+                            </select>
+                            <span>:</span>
+                            <select name="am_departure_m" class="time-select">
+                                <?php for($i=0; $i<=55; $i+=5) echo "<option value='".sprintf("%02d", $i)."'>".sprintf("%02d", $i)."</option>"; ?>
+                            </select>
+                            <select name="am_departure_ap" class="time-select">
+                                <option value="AM" selected>AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,11 +68,35 @@
                 <div class="time-grid" style="margin-top: 10px;">
                     <div class="form-group">
                         <label>Arrival:</label>
-                        <input type="text" name="pm_arrival" class="timepicker" value="13:00">
+                        <div class="custom-time-selection">
+                            <select name="pm_arrival_h" class="time-select">
+                                <?php for($i=1; $i<=12; $i++) echo "<option value='".sprintf("%02d", $i)."' ".($i==1 ? "selected" : "").">$i</option>"; ?>
+                            </select>
+                            <span>:</span>
+                            <select name="pm_arrival_m" class="time-select">
+                                <?php for($i=0; $i<=55; $i+=5) echo "<option value='".sprintf("%02d", $i)."'>".sprintf("%02d", $i)."</option>"; ?>
+                            </select>
+                            <select name="pm_arrival_ap" class="time-select">
+                                <option value="AM">AM</option>
+                                <option value="PM" selected>PM</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Departure:</label>
-                        <input type="text" name="pm_departure" class="timepicker" value="17:00">
+                        <div class="custom-time-selection">
+                            <select name="pm_departure_h" class="time-select">
+                                <?php for($i=1; $i<=12; $i++) echo "<option value='".sprintf("%02d", $i)."' ".($i==5 ? "selected" : "").">$i</option>"; ?>
+                            </select>
+                            <span>:</span>
+                            <select name="pm_departure_m" class="time-select">
+                                <?php for($i=0; $i<=55; $i+=5) echo "<option value='".sprintf("%02d", $i)."'>".sprintf("%02d", $i)."</option>"; ?>
+                            </select>
+                            <select name="pm_departure_ap" class="time-select">
+                                <option value="AM">AM</option>
+                                <option value="PM" selected>PM</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,12 +109,5 @@
 </div>
 
 <script>
-flatpickr(".timepicker", {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-    altInput: true,
-    altFormat: "h:i K"
-});
+// No Flatpickr needed for time selection anymore
 </script>

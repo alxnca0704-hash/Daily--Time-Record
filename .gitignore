@@ -1,0 +1,24 @@
+# IDE / System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dependencies
+vendor/
+node_modules/
+
+# Environment / Sensitive data
+.env
+*.log
+config.php
+credentials.json
+
+# Agent / Skill configurations
+.agents/
+skills-lock.json
+
+# Temporary files
+tmp/
+temp/
+*.tmp

@@ -24,6 +24,7 @@ if (!in_array($page, $allowed_pages)) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -60,5 +61,6 @@ if (!in_array($page, $allowed_pages)) {
     </footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 </html>

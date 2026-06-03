@@ -190,6 +190,22 @@ input:focus, select:focus {
     padding-bottom: 0.5rem;
 }
 
+/* Taste Skill: Inline Picker Refinement */
+.inline-picker-container {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.flatpickr-calendar.inline {
+    box-shadow: none;
+    border: none;
+    margin: 0 auto;
+}
+
 table {
     width: 100%;
     border-collapse: separate;

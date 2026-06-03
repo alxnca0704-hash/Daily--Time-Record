@@ -30,11 +30,11 @@
                 <div class="time-grid" style="margin-top: 10px;">
                     <div class="form-group">
                         <label>Arrival:</label>
-                        <input type="time" name="am_arrival" value="08:00">
+                        <input type="text" name="am_arrival" class="timepicker" value="08:00">
                     </div>
                     <div class="form-group">
                         <label>Departure:</label>
-                        <input type="time" name="am_departure" value="12:00">
+                        <input type="text" name="am_departure" class="timepicker" value="12:00">
                     </div>
                 </div>
             </div>
@@ -44,11 +44,11 @@
                 <div class="time-grid" style="margin-top: 10px;">
                     <div class="form-group">
                         <label>Arrival:</label>
-                        <input type="time" name="pm_arrival" value="13:00">
+                        <input type="text" name="pm_arrival" class="timepicker" value="13:00">
                     </div>
                     <div class="form-group">
                         <label>Departure:</label>
-                        <input type="time" name="pm_departure" value="17:00">
+                        <input type="text" name="pm_departure" class="timepicker" value="17:00">
                     </div>
                 </div>
             </div>
@@ -59,3 +59,14 @@
         </div>
     </form>
 </div>
+
+<script>
+flatpickr(".timepicker", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true,
+    altInput: true,
+    altFormat: "h:i K"
+});
+</script>

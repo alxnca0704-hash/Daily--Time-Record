@@ -37,22 +37,32 @@ if (!in_array($page, $allowed_pages)) {
     <aside class="sidebar">
         <div class="sidebar-header">
             <img src="assets/Images/denr.png" alt="DENR Logo" class="sidebar-logo">
-            <div class="sidebar-title">DENR DTR<br>System</div>
+            <div class="sidebar-title">DENR<br>DTR System</div>
         </div>
         <nav>
             <a href="index.php?page=dashboard" class="<?php echo $page == 'dashboard' ? 'active' : ''; ?>">
-                <i class="ph-bold ph-house-line"></i> Dashboard
+                <i class="ph-bold ph-layout"></i> Dashboard
             </a>
+            <div style="padding: 1.5rem 1rem 0.5rem; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--zinc-400);">Management</div>
             <a href="index.php?page=create-dtr" class="<?php echo $page == 'create-dtr' ? 'active' : ''; ?>">
                 <i class="ph-bold ph-file-text"></i> Create DTR
             </a>
             <a href="index.php?page=manage-employees" class="<?php echo $page == 'manage-employees' ? 'active' : ''; ?>">
-                <i class="ph-bold ph-users"></i> Employees
+                <i class="ph-bold ph-users-three"></i> Employees
             </a>
             <a href="index.php?page=manage-departments" class="<?php echo $page == 'manage-departments' ? 'active' : ''; ?>">
                 <i class="ph-bold ph-buildings"></i> Departments
             </a>
         </nav>
+        <div style="margin-top: auto; padding: 1.5rem; border-top: 1px solid var(--border-soft);">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--zinc-100); display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 700; color: var(--zinc-600);">AD</div>
+                <div>
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--zinc-900);">Admin User</div>
+                    <div style="font-size: 0.625rem; font-weight: 500; color: var(--zinc-500);">System Administrator</div>
+                </div>
+            </div>
+        </div>
     </aside>
 
     <div class="main-content">
@@ -63,15 +73,14 @@ if (!in_array($page, $allowed_pages)) {
                     if (file_exists($view_path)) {
                         include $view_path;
                     } else {
-                        echo "<div class='card'><h2>Page not found</h2><p>The requested page could not be located in the UI folder.</p></div>";
+                        echo "<div class='card'><h2>Page not found</h2><p class='muted'>The requested page could not be located in the UI folder.</p></div>";
                     }
                 ?>
             </main>
 
             <footer>
-                <div style="text-align: center;">
-                    &copy; <?php echo date('Y'); ?> DENR DTR System Prototype
-                </div>
+                &copy; <?php echo date('Y'); ?> Department of Environment and Natural Resources
+                <div style="margin-top: 0.5rem; font-size: 0.7rem; opacity: 0.6;">DTR Management System v1.0 Prototype</div>
             </footer>
         </div>
     </div>
@@ -79,8 +88,8 @@ if (!in_array($page, $allowed_pages)) {
 
 <div id="toast-container" class="toast-container">
     <?php if (isset($_SESSION['flash'])): ?>
-        <div class="toast toast-success">
-            <span>✓</span>
+        <div class="toast">
+            <i class="ph-bold ph-check-circle" style="color: var(--primary); font-size: 1.25rem;"></i>
             <span><?php echo htmlspecialchars($_SESSION['flash']); unset($_SESSION['flash']); ?></span>
         </div>
     <?php endif; ?>

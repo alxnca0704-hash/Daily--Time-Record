@@ -15,11 +15,12 @@ A PHP-based web application designed for managing employee daily time records, d
 ## UI/UX Standards (Taste Skill)
 
 The UI has been upgraded following the **Taste Skill** "Anti-Slop" principles:
-- **Design Read:** Internal public-sector system with a trust-first, functional language.
-- **Palette:** Professional Slate/Zinc neutral base with Emerald accents (representing DENR).
-- **Typography:** Inter (Sans-serif) for high legibility and professional clarity.
-- **Spacing:** Consistent 8px grid system with refined borders and subtle shadows.
-- **Responsiveness:** Mobile-friendly grid layouts using `min-h-[100dvh]` and CSS Grid.
+- **Design Read:** Internal public-sector system with a trust-first, authoritative, and stable language.
+- **Palette:** Refined Zinc/Emerald palette. Deep Zinc (`#18181b`) for text and dark elements, with Emerald (`#059669`) as the primary DENR institutional accent.
+- **Typography:** Plus Jakarta Sans for a modern, high-legibility professional look.
+- **Spacing:** Systematic 8px grid with refined border-radii (`6px` to `14px`) and subtle soft shadows.
+- **Components:** Systematic classes for `card`, `stats-grid`, `table-container`, `badge`, and `btn` (emerald, primary, outline).
+- **Responsiveness:** Mobile-friendly layouts using CSS Grid and standard breakpoints.
 
 ## Getting Started
 

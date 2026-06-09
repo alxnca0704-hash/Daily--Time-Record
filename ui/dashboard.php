@@ -1,81 +1,76 @@
 <div class="card">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div class="card-header">
         <div>
-            <h2><i class="ph-bold ph-house-line" style="margin-right: 8px; vertical-align: middle;"></i> Welcome to DTR System</h2>
-            <p style="color: var(--text-muted); max-width: 65ch;">Select an option from the navigation menu to manage personnel, configure department schedules, or generate official Daily Time Records.</p>
+            <h2><i class="ph-bold ph-house-line"></i> Welcome to DTR System</h2>
+            <p class="muted">Manage personnel, configure department schedules, and generate official Daily Time Records for DENR.</p>
         </div>
-        <div style="background: #f0fdf4; color: #166534; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; border: 1px solid #bbf7d0;">
-            <i class="ph-bold ph-check-circle"></i> SYSTEM ACTIVE
+        <div class="badge badge-success">
+            <i class="ph-bold ph-check-circle" style="margin-right: 6px;"></i> System Active
         </div>
     </div>
     
-    <div class="grid" style="margin-top: 2rem;">
-        <div class="card" style="border-top: 4px solid var(--primary-color);">
-            <div style="display: flex; gap: 1rem;">
-                <div style="background: #f3f4f6; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                    <i class="ph-bold ph-file-text"></i>
-                </div>
-                <div>
-                    <h3>Create DTR</h3>
-                    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">Generate official reports and import biometric logs.</p>
-                    <a href="index.php?page=create-dtr" class="btn btn-primary">Generate</a>
-                </div>
+    <div class="stats-grid">
+        <div class="stat-card" style="border-top: 3px solid var(--primary);">
+            <span class="stat-label">Total Employees</span>
+            <span class="stat-value"><?php echo count($_SESSION['employees']); ?></span>
+            <div style="margin-top: auto; padding-top: 1rem;">
+                <a href="index.php?page=manage-employees" class="btn btn-outline" style="width: 100%;">View All</a>
             </div>
         </div>
         
-        <div class="card" style="border-top: 4px solid #3b82f6;">
-            <div style="display: flex; gap: 1rem;">
-                <div style="background: #eff6ff; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #3b82f6;">
-                    <i class="ph-bold ph-users"></i>
-                </div>
-                <div>
-                    <h3>Personnel</h3>
-                    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">Maintain employee profiles and employment types.</p>
-                    <a href="index.php?page=manage-employees" class="btn btn-primary" style="background: #3b82f6;">Manage</a>
-                </div>
+        <div class="stat-card" style="border-top: 3px solid var(--info);">
+            <span class="stat-label">Active Departments</span>
+            <span class="stat-value"><?php echo count($_SESSION['departments']); ?></span>
+            <div style="margin-top: auto; padding-top: 1rem;">
+                <a href="index.php?page=manage-departments" class="btn btn-outline" style="width: 100%;">Configure</a>
+            </div>
+        </div>
+
+        <div class="stat-card" style="border-top: 3px solid var(--warning);">
+            <span class="stat-label">Pending Logs</span>
+            <span class="stat-value"><?php echo count($_SESSION['manual_logs']); ?></span>
+            <div style="margin-top: auto; padding-top: 1rem;">
+                <a href="index.php?page=create-dtr" class="btn btn-outline" style="width: 100%;">Review</a>
             </div>
         </div>
     </div>
 </div>
 
 <div class="grid">
-    <div class="card" style="border-left: 4px solid #f59e0b;">
-        <h3 style="display: flex; align-items: center; gap: 8px;">
-            <i class="ph-bold ph-chart-pie-slice" style="color: #f59e0b;"></i> System Overview
-        </h3>
-        <table style="margin-top: 0.5rem;">
-            <tr>
-                <td style="display: flex; align-items: center; gap: 8px; border:none; padding: 0.75rem 0;">
-                    <i class="ph-bold ph-user-list"></i> Total Employees
-                </td>
-                <td style="text-align: right; font-weight: 800; border:none;"><?php echo count($_SESSION['employees']); ?></td>
-            </tr>
-            <tr>
-                <td style="display: flex; align-items: center; gap: 8px; border:none; padding: 0.75rem 0;">
-                    <i class="ph-bold ph-buildings"></i> Departments
-                </td>
-                <td style="text-align: right; font-weight: 800; border:none;"><?php echo count($_SESSION['departments']); ?></td>
-            </tr>
-            <tr>
-                <td style="display: flex; align-items: center; gap: 8px; border:none; padding: 0.75rem 0;">
-                    <i class="ph-bold ph-clock-countdown"></i> Manual Adjustments
-                </td>
-                <td style="text-align: right; font-weight: 800; border:none;"><?php echo count($_SESSION['manual_logs']); ?></td>
-            </tr>
-        </table>
-    </div>
-    
-    <div class="card" style="border-left: 4px solid #8b5cf6;">
-        <h3 style="display: flex; align-items: center; gap: 8px;">
-            <i class="ph-bold ph-lightning" style="color: #8b5cf6;"></i> Quick Tasks
-        </h3>
-        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
-            <a href="index.php?page=manage-departments" class="btn" style="justify-content: flex-start; background: #f5f3ff; color: #5b21b6; border: 1px solid #ddd6fe;">
-                <i class="ph-bold ph-gear" style="margin-right: 8px;"></i> Configure Schedules
+    <div class="card">
+        <h3><i class="ph-bold ph-lightning" style="color: var(--warning); margin-right: 8px;"></i> Quick Actions</h3>
+        <p class="muted" style="margin-bottom: 1.5rem;">Commonly used administrative tasks.</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <a href="index.php?page=create-dtr" class="btn btn-emerald" style="justify-content: flex-start; padding: 1rem;">
+                <i class="ph-bold ph-file-text"></i> Generate New DTR Report
             </a>
-            <a href="index.php?page=create-dtr" class="btn" style="justify-content: flex-start; background: #fffbeb; color: #92400e; border: 1px solid #fef3c7;">
-                <i class="ph-bold ph-upload-simple" style="margin-right: 8px;"></i> Import Biometric Data
+            <a href="index.php?page=manage-employees" class="btn btn-outline" style="justify-content: flex-start; padding: 1rem;">
+                <i class="ph-bold ph-user-plus"></i> Add New Employee Profile
             </a>
         </div>
     </div>
+    
+    <div class="card">
+        <h3><i class="ph-bold ph-info" style="color: var(--info); margin-right: 8px;"></i> System Information</h3>
+        <p class="muted" style="margin-bottom: 1.5rem;">Current environment and versioning.</p>
+        
+        <div class="table-container">
+            <table>
+                <tr>
+                    <td style="font-weight: 600;">Environment</td>
+                    <td style="text-align: right;">Prototype / Local</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Last Data Sync</td>
+                    <td style="text-align: right;">Never (Mock)</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Database Status</td>
+                    <td style="text-align: right;"><span class="badge" style="background: #fee2e2; color: #991b1b;">Not Connected</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
+

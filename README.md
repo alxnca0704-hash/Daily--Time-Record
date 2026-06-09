@@ -6,7 +6,7 @@ A sophisticated, high-performance PHP-based web application prototype designed f
 
 ## ✨ Features
 
--   **Modern Sidebar Navigation:** Professional dashboard layout with a sticky sidebar and Phosphor Icons for streamlined workflow.
+-   **Modern Sidebar Navigation:** Professional dashboard layout with a sticky sidebar and Phosph or Icons for streamlined workflow.
 -   **Minimalist UI/UX:** A "Linear-style" high-contrast design using pure white backgrounds, shadowed cards, and bold black accents.
 -   **Advanced Pickers:**
     -   **Inline Date Range Picker:** Permanent visual calendar for report generation.

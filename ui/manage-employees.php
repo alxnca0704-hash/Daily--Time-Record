@@ -1,27 +1,30 @@
 <div class="card">
-    <h2><i class="ph-bold ph-user-plus" style="margin-right: 8px;"></i> Manage Employee</h2>
+    <div class="card-header">
+        <div>
+            <h2><i class="ph-bold ph-users-three"></i> Employee Management</h2>
+            <p class="muted">Register and manage personnel profiles within the system.</p>
+        </div>
+    </div>
     
     <form action="logic/process-employee.php" method="POST">
-        <div class="section-title"><i class="ph-bold ph-identification-card" style="margin-right: 8px;"></i> Add / Edit Employee</div>
-        
         <div class="grid">
             <div class="form-group">
-                <label>Full Name:</label>
+                <label>Full Name</label>
                 <input type="text" name="name" placeholder="Last Name, First Name M.I." required>
             </div>
             
             <div class="form-group">
-                <label>ID#:</label>
-                <input type="text" name="id_num" placeholder="DTR ID" required>
+                <label>DTR ID#</label>
+                <input type="text" name="id_num" placeholder="Machine / DTR ID" required>
             </div>
             
             <div class="form-group">
-                <label>Employee Number:</label>
-                <input type="text" name="employee_num" placeholder="Official Employee #" required>
+                <label>Official Employee Number</label>
+                <input type="text" name="employee_num" placeholder="HR Employee #" required>
             </div>
             
             <div class="form-group">
-                <label>Employee Type:</label>
+                <label>Employment Type</label>
                 <select name="employee_type">
                     <option value="Regular">Regular</option>
                     <option value="Contractual">Contractual</option>
@@ -30,51 +33,72 @@
             </div>
 
             <div class="form-group">
-                <label>Department:</label>
+                <label>Assigned Department</label>
                 <select name="department_id">
                     <option value="1">Administrative</option>
                     <option value="2">Finance</option>
                     <option value="3">Operations</option>
+                    <option value="4">Technical Services</option>
                 </select>
             </div>
         </div>
 
-        <div style="margin-top: 1rem;">
-            <button type="submit" class="btn btn-primary">Save Employee</button>
-            <button type="reset" class="btn" style="background: #ccc;">Clear</button>
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem; border-top: 1px solid var(--border-soft); padding-top: 1.5rem;">
+            <button type="submit" class="btn btn-emerald">
+                <i class="ph-bold ph-user-plus"></i> Save Employee Profile
+            </button>
+            <button type="reset" class="btn btn-outline">Clear Form</button>
         </div>
     </form>
 </div>
 
 <div class="card">
-    <h3>Existing Employees</h3>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
-        <thead>
-            <tr style="background: var(--bg-color); text-align: left;">
-                <th style="padding: 10px; border: 1px solid var(--border-color);">Name</th>
-                <th style="padding: 10px; border: 1px solid var(--border-color);">ID#</th>
-                <th style="padding: 10px; border: 1px solid var(--border-color);">Type</th>
-                <th style="padding: 10px; border: 1px solid var(--border-color);">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($_SESSION['employees'])): ?>
+    <h3><i class="ph-bold ph-list-bullets" style="color: var(--primary); margin-right: 8px;"></i> Personnel Registry</h3>
+    <p class="muted" style="margin-bottom: 1.5rem;">Currently registered employees in the system.</p>
+    
+    <div class="table-container">
+        <table>
+            <thead>
                 <tr>
-                    <td colspan="4" style="padding: 20px; text-align: center; color: var(--text-muted);">No employees added yet.</td>
+                    <th>Full Name</th>
+                    <th>ID#</th>
+                    <th>Employment Type</th>
+                    <th style="text-align: right;">Actions</th>
                 </tr>
-            <?php else: ?>
-                <?php foreach ($_SESSION['employees'] as $emp): ?>
+            </thead>
+            <tbody>
+                <?php if (empty($_SESSION['employees'])): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($emp['name']); ?></td>
-                        <td><?php echo htmlspecialchars($emp['id_num']); ?></td>
-                        <td><?php echo htmlspecialchars($emp['employee_type']); ?></td>
-                        <td>
-                            <a href="index.php?page=edit-employee&id=<?php echo $emp['id']; ?>" style="color: var(--primary-color); font-weight: 700; margin-right: 10px;">Edit</a>
-                            <a href="logic/process-delete-employee.php?id=<?php echo $emp['id']; ?>" style="color: var(--error-color); font-weight: 700;" onclick="return confirm('Are you sure you want to delete this employee?')">Delete</a>
+                        <td colspan="4" style="padding: 3rem; text-align: center;">
+                            <div style="opacity: 0.5; margin-bottom: 0.5rem;"><i class="ph-bold ph-users" style="font-size: 2rem;"></i></div>
+                            <p class="muted">No employees registered yet.</p>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
+                <?php else: ?>
+                    <?php foreach ($_SESSION['employees'] as $emp): ?>
+                        <tr>
+                            <td style="font-weight: 600; color: var(--zinc-900);"><?php echo htmlspecialchars($emp['name']); ?></td>
+                            <td><span style="font-family: monospace; font-weight: 700; color: var(--zinc-500);"><?php echo htmlspecialchars($emp['id_num']); ?></span></td>
+                            <td>
+                                <span class="badge" style="background: var(--zinc-100); color: var(--zinc-600);">
+                                    <?php echo htmlspecialchars($emp['employee_type']); ?>
+                                </span>
+                            </td>
+                            <td style="text-align: right;">
+                                <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                    <a href="index.php?page=edit-employee&id=<?php echo $emp['id']; ?>" class="btn btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.75rem;">
+                                        <i class="ph-bold ph-pencil-simple"></i> Edit
+                                    </a>
+                                    <a href="logic/process-delete-employee.php?id=<?php echo $emp['id']; ?>" class="btn btn-outline" style="padding: 0.4rem 0.75rem; font-size: 0.75rem; color: var(--error);" onclick="return confirm('Are you sure you want to delete this employee?')">
+                                        <i class="ph-bold ph-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
+

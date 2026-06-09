@@ -1,3 +1,22 @@
+<?php
+require_once 'logic/db.php';
+
+// Fetch departments for the dropdown
+$dept_stmt = $pdo->query("SELECT id, name FROM departments ORDER BY name ASC");
+$departments = $dept_stmt->fetchAll();
+
+// Fetch recent manual logs
+$log_stmt = $pdo->query("
+    SELECT l.*, e.name as employee_name 
+    FROM attendance_logs l 
+    JOIN employees e ON l.employee_id = e.id 
+    WHERE l.source = 'manual' 
+    ORDER BY l.log_timestamp DESC 
+    LIMIT 10
+");
+$recent_logs = $log_stmt->fetchAll();
+?>
+
 <div class="card">
     <div class="card-header">
         <div>
@@ -27,17 +46,17 @@
         </div>
 
         <div id="individual_option" class="form-group" style="display:none; margin-top: 1rem; animation: slideDown 0.3s ease;">
-            <label>Employee Search</label>
-            <input type="text" name="employee_name" placeholder="Type name to filter...">
+            <label>Employee Name or ID#</label>
+            <input type="text" name="employee_name" placeholder="Type name or ID to filter...">
         </div>
 
         <div id="department_option" class="form-group" style="display:none; margin-top: 1rem; animation: slideDown 0.3s ease;">
             <label>Select Department Unit</label>
             <select name="department_id">
                 <option value="">-- Choose Unit --</option>
-                <option value="1">Administrative</option>
-                <option value="2">Finance</option>
-                <option value="3">Operations</option>
+                <?php foreach ($departments as $dept): ?>
+                    <option value="<?php echo $dept['id']; ?>"><?php echo htmlspecialchars($dept['name']); ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
 
@@ -75,7 +94,7 @@
         <div class="grid">
             <div class="form-group">
                 <label>Select Personnel</label>
-                <input type="text" name="adj_employee" placeholder="Name or ID#">
+                <input type="text" name="adj_employee" placeholder="Name or ID#" required>
             </div>
             
             <div class="form-group">
@@ -112,22 +131,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($_SESSION['manual_logs'])): ?>
+                    <?php if (empty($recent_logs)): ?>
                         <tr>
                             <td colspan="3" style="text-align: center; padding: 2.5rem;">
                                 <p class="muted">No manual adjustments on record.</p>
                             </td>
                         </tr>
                     <?php else: ?>
-                        <?php foreach (array_reverse($_SESSION['manual_logs']) as $log): ?>
+                        <?php foreach ($recent_logs as $log): ?>
                             <tr>
-                                <td style="font-weight: 700; color: var(--zinc-900);"><?php echo htmlspecialchars($log['employee']); ?></td>
+                                <td style="font-weight: 700; color: var(--zinc-900);"><?php echo htmlspecialchars($log['employee_name']); ?></td>
                                 <td>
-                                    <span class="badge" style="background: <?php echo $log['type'] === 'in' ? 'var(--primary-soft)' : '#fef3c7'; ?>; color: <?php echo $log['type'] === 'in' ? 'var(--primary-hover)' : '#92400e'; ?>;">
-                                        <?php echo $log['type'] === 'in' ? 'Arrival' : 'Departure'; ?>
+                                    <span class="badge" style="background: <?php echo $log['log_type'] === 'in' ? 'var(--primary-soft)' : '#fef3c7'; ?>; color: <?php echo $log['log_type'] === 'in' ? 'var(--primary-hover)' : '#92400e'; ?>;">
+                                        <?php echo $log['log_type'] === 'in' ? 'Arrival' : 'Departure'; ?>
                                     </span>
                                 </td>
-                                <td style="font-family: monospace; font-weight: 500;"><?php echo htmlspecialchars($log['datetime']); ?></td>
+                                <td style="font-family: monospace; font-weight: 500;"><?php echo date("M d, Y h:i A", strtotime($log['log_timestamp'])); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>

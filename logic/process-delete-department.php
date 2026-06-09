@@ -1,18 +1,17 @@
 <?php
 session_start();
+require_once 'db.php';
 
-$id = $_GET['id'] ?? null;
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-if ($id) {
-    foreach ($_SESSION['departments'] as $key => $dept) {
-        if ($dept['id'] == $id) {
-            $name = $dept['name'];
-            unset($_SESSION['departments'][$key]);
-            // Re-index array
-            $_SESSION['departments'] = array_values($_SESSION['departments']);
-            $_SESSION['flash'] = "Department '$name' deleted successfully.";
-            break;
-        }
+    try {
+        $stmt = $pdo->prepare("DELETE FROM departments WHERE id = ?");
+        $stmt->execute([$id]);
+        
+        $_SESSION['flash'] = "Department deleted successfully.";
+    } catch (PDOException $e) {
+        $_SESSION['flash'] = "Error deleting department: " . $e->getMessage();
     }
 }
 

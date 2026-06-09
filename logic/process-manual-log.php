@@ -1,18 +1,31 @@
 <?php
 session_start();
+require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = count($_SESSION['manual_logs']) + 1;
-    
-    $new_log = [
-        'id' => $id,
-        'employee' => $_POST['adj_employee'] ?? '',
-        'type' => $_POST['log_type'] ?? '',
-        'datetime' => $_POST['adjustment_datetime'] ?? ''
-    ];
+    $adj_employee = $_POST['adj_employee'] ?? '';
+    $log_type = $_POST['log_type'] ?? 'in';
+    $log_timestamp = $_POST['adjustment_datetime'] ?? date('Y-m-d H:i:s');
 
-    $_SESSION['manual_logs'][] = $new_log;
-    $_SESSION['flash'] = "Manual log for " . $new_log['employee'] . " recorded.";
+    try {
+        // Find employee ID by name or id_num
+        $emp_stmt = $pdo->prepare("SELECT id FROM employees WHERE name LIKE ? OR id_num = ? LIMIT 1");
+        $emp_stmt->execute(["%$adj_employee%", $adj_employee]);
+        $employee = $emp_stmt->fetch();
+
+        if ($employee) {
+            $stmt = $pdo->prepare("
+                INSERT INTO attendance_logs (employee_id, log_type, log_timestamp, source) 
+                VALUES (?, ?, ?, 'manual')
+            ");
+            $stmt->execute([$employee['id'], $log_type, $log_timestamp]);
+            $_SESSION['flash'] = "Manual adjustment for " . htmlspecialchars($adj_employee) . " recorded.";
+        } else {
+            $_SESSION['flash'] = "Error: Personnel not found.";
+        }
+    } catch (PDOException $e) {
+        $_SESSION['flash'] = "Error: " . $e->getMessage();
+    }
 
     header("Location: ../index.php?page=create-dtr");
     exit;

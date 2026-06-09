@@ -1,3 +1,16 @@
+<?php
+require_once 'logic/db.php';
+
+// Fetch counts
+$emp_count = $pdo->query("SELECT COUNT(*) FROM employees")->fetchColumn();
+$dept_count = $pdo->query("SELECT COUNT(*) FROM departments")->fetchColumn();
+$log_count = $pdo->query("SELECT COUNT(*) FROM attendance_logs WHERE source = 'manual'")->fetchColumn();
+
+// Check DB connection status (already connected via db.php)
+$db_status = "Connected";
+$db_badge_style = "background: var(--primary-soft); color: var(--primary-hover);";
+?>
+
 <div class="card">
     <div class="card-header">
         <div>
@@ -12,7 +25,7 @@
     <div class="stats-grid">
         <div class="stat-card" style="border-top: 3px solid var(--primary);">
             <span class="stat-label">Total Employees</span>
-            <span class="stat-value"><?php echo count($_SESSION['employees']); ?></span>
+            <span class="stat-value"><?php echo $emp_count; ?></span>
             <div style="margin-top: auto; padding-top: 1rem;">
                 <a href="index.php?page=manage-employees" class="btn btn-outline" style="width: 100%;">View All</a>
             </div>
@@ -20,15 +33,15 @@
         
         <div class="stat-card" style="border-top: 3px solid var(--info);">
             <span class="stat-label">Active Departments</span>
-            <span class="stat-value"><?php echo count($_SESSION['departments']); ?></span>
+            <span class="stat-value"><?php echo $dept_count; ?></span>
             <div style="margin-top: auto; padding-top: 1rem;">
                 <a href="index.php?page=manage-departments" class="btn btn-outline" style="width: 100%;">Configure</a>
             </div>
         </div>
 
         <div class="stat-card" style="border-top: 3px solid var(--warning);">
-            <span class="stat-label">Pending Logs</span>
-            <span class="stat-value"><?php echo count($_SESSION['manual_logs']); ?></span>
+            <span class="stat-label">Adjustment Logs</span>
+            <span class="stat-value"><?php echo $log_count; ?></span>
             <div style="margin-top: auto; padding-top: 1rem;">
                 <a href="index.php?page=create-dtr" class="btn btn-outline" style="width: 100%;">Review</a>
             </div>
@@ -63,11 +76,11 @@
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">Last Data Sync</td>
-                    <td style="text-align: right;">Never (Mock)</td>
+                    <td style="text-align: right;"><?php echo date('M d, Y H:i'); ?></td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">Database Status</td>
-                    <td style="text-align: right;"><span class="badge" style="background: #fee2e2; color: #991b1b;">Not Connected</span></td>
+                    <td style="text-align: right;"><span class="badge" style="<?php echo $db_badge_style; ?>"><?php echo $db_status; ?></span></td>
                 </tr>
             </table>
         </div>

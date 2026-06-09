@@ -1,17 +1,17 @@
 <?php
 session_start();
+require_once 'db.php';
 
-$id = $_GET['id'] ?? null;
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-if ($id) {
-    foreach ($_SESSION['employees'] as $key => $emp) {
-        if ($emp['id'] == $id) {
-            $name = $emp['name'];
-            unset($_SESSION['employees'][$key]);
-            $_SESSION['employees'] = array_values($_SESSION['employees']);
-            $_SESSION['flash'] = "Employee '$name' deleted successfully.";
-            break;
-        }
+    try {
+        $stmt = $pdo->prepare("DELETE FROM employees WHERE id = ?");
+        $stmt->execute([$id]);
+        
+        $_SESSION['flash'] = "Employee record deleted successfully.";
+    } catch (PDOException $e) {
+        $_SESSION['flash'] = "Error deleting employee: " . $e->getMessage();
     }
 }
 

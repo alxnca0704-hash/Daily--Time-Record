@@ -1,3 +1,20 @@
+<?php
+require_once 'logic/db.php';
+
+// Fetch departments for the dropdown
+$dept_stmt = $pdo->query("SELECT id, name FROM departments ORDER BY name ASC");
+$departments = $dept_stmt->fetchAll();
+
+// Fetch employees with department names
+$emp_stmt = $pdo->query("
+    SELECT e.*, d.name as department_name 
+    FROM employees e 
+    LEFT JOIN departments d ON e.department_id = d.id 
+    ORDER BY e.name ASC
+");
+$employees = $emp_stmt->fetchAll();
+?>
+
 <div class="card">
     <div class="card-header">
         <div>
@@ -35,10 +52,10 @@
             <div class="form-group">
                 <label>Assigned Department</label>
                 <select name="department_id">
-                    <option value="1">Administrative</option>
-                    <option value="2">Finance</option>
-                    <option value="3">Operations</option>
-                    <option value="4">Technical Services</option>
+                    <option value="">-- Select Department --</option>
+                    <?php foreach ($departments as $dept): ?>
+                        <option value="<?php echo $dept['id']; ?>"><?php echo htmlspecialchars($dept['name']); ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -61,13 +78,13 @@
             <thead>
                 <tr>
                     <th>Full Name</th>
-                    <th>ID#</th>
+                    <th>ID# / Dept</th>
                     <th>Employment Type</th>
                     <th style="text-align: right;">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (empty($_SESSION['employees'])): ?>
+                <?php if (empty($employees)): ?>
                     <tr>
                         <td colspan="4" style="padding: 3rem; text-align: center;">
                             <div style="opacity: 0.5; margin-bottom: 0.5rem;"><i class="ph-bold ph-users" style="font-size: 2rem;"></i></div>
@@ -75,10 +92,16 @@
                         </td>
                     </tr>
                 <?php else: ?>
-                    <?php foreach ($_SESSION['employees'] as $emp): ?>
+                    <?php foreach ($employees as $emp): ?>
                         <tr>
-                            <td style="font-weight: 600; color: var(--zinc-900);"><?php echo htmlspecialchars($emp['name']); ?></td>
-                            <td><span style="font-family: monospace; font-weight: 700; color: var(--zinc-500);"><?php echo htmlspecialchars($emp['id_num']); ?></span></td>
+                            <td>
+                                <div style="font-weight: 600; color: var(--zinc-900);"><?php echo htmlspecialchars($emp['name']); ?></div>
+                                <div style="font-size: 0.7rem; color: var(--zinc-400);">HR#: <?php echo htmlspecialchars($emp['employee_num']); ?></div>
+                            </td>
+                            <td>
+                                <div style="font-family: monospace; font-weight: 700; color: var(--zinc-500);"><?php echo htmlspecialchars($emp['id_num']); ?></div>
+                                <div style="font-size: 0.7rem; color: var(--primary); font-weight: 600;"><?php echo htmlspecialchars($emp['department_name'] ?? 'Unassigned'); ?></div>
+                            </td>
                             <td>
                                 <span class="badge" style="background: var(--zinc-100); color: var(--zinc-600);">
                                     <?php echo htmlspecialchars($emp['employee_type']); ?>

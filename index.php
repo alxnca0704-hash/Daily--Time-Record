@@ -4,11 +4,6 @@
  */
 session_start();
 
-// Initialize session arrays if they don't exist
-if (!isset($_SESSION['employees'])) $_SESSION['employees'] = [];
-if (!isset($_SESSION['departments'])) $_SESSION['departments'] = [];
-if (!isset($_SESSION['manual_logs'])) $_SESSION['manual_logs'] = [];
-
 // Simple routing based on 'page' parameter
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 

@@ -8,7 +8,7 @@ session_start();
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
 // Define allowed pages to prevent directory traversal
-$allowed_pages = ['dashboard', 'create-dtr', 'manage-employees', 'manage-departments', 'edit-employee', 'edit-department'];
+$allowed_pages = ['dashboard', 'create-dtr', 'manage-employees', 'manage-departments', 'edit-employee', 'edit-department', 'view-dtr'];
 
 if (!in_array($page, $allowed_pages)) {
     $page = 'dashboard';
@@ -24,6 +24,7 @@ if (!in_array($page, $allowed_pages)) {
     <title>DENR DTR System Prototype</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -90,7 +91,6 @@ if (!in_array($page, $allowed_pages)) {
     <?php endif; ?>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
     // Micro-feedback for buttons
     document.querySelectorAll('.btn').forEach(btn => {

@@ -40,8 +40,8 @@ $recent_logs = $log_stmt->fetchAll();
 
             <div class="form-group" style="grid-column: span 2;">
                 <label>Target Date Range</label>
-                <div id="date_range_container" class="inline-picker-container"></div>
-                <input type="hidden" name="date_range" id="date_range" required>
+                <input type="text" name="date_range" id="date_range" required placeholder="Select date range..." style="display:none;">
+                <div id="date_range_picker_container"></div>
             </div>
         </div>
 
@@ -63,10 +63,15 @@ $recent_logs = $log_stmt->fetchAll();
         <div style="margin: 2.5rem 0 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-soft);">
             <h3 style="margin-bottom: 1.25rem;"><i class="ph-bold ph-file-arrow-up" style="color: var(--info); margin-right: 8px;"></i> Data Integration</h3>
             <div class="form-group">
-                <label>Attendance Log File (CSV / Excel)</label>
-                <input type="file" name="report_file" accept=".csv, .xlsx, .xls">
+                <label>Attendance Log File (CSV)</label>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <input type="file" name="report_file" accept=".csv" style="flex: 1;">
+                    <a href="mock-attendance.csv" download class="btn btn-outline" style="padding: 0.5rem 0.75rem; font-size: 0.75rem;">
+                        <i class="ph-bold ph-download-simple"></i> Template
+                    </a>
+                </div>
                 <p class="muted" style="font-size: 0.75rem; margin-top: 0.5rem;">
-                    <i class="ph-bold ph-info"></i> Upload biometric machine exports or CSV logs here.
+                    <i class="ph-bold ph-info"></i> Upload biometric machine exports. Format: <code>id_num, name, timestamp, type</code>
                 </p>
             </div>
         </div>
@@ -107,8 +112,8 @@ $recent_logs = $log_stmt->fetchAll();
 
             <div class="form-group">
                 <label>Adjustment Date & Time</label>
-                <div id="adjustment_datetime_container" class="inline-picker-container"></div>
-                <input type="hidden" name="adjustment_datetime" id="adjustment_datetime" required>
+                <input type="text" name="adjustment_datetime" id="adjustment_datetime" required style="display:none;">
+                <div id="adjustment_datetime_picker_container"></div>
             </div>
         </div>
         
@@ -164,36 +169,44 @@ $recent_logs = $log_stmt->fetchAll();
 </style>
 
 <script>
-document.getElementById('report_type').addEventListener('change', function() {
-    const individual = document.getElementById('individual_option');
-    const department = document.getElementById('department_option');
-    
-    individual.style.display = 'none';
-    department.style.display = 'none';
-    
-    if (this.value === 'individual') {
-        individual.style.display = 'block';
-    } else if (this.value === 'department') {
-        department.style.display = 'block';
+// Use a function to ensure flatpickr is loaded or use DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggles for report configuration
+    const reportTypeSelect = document.getElementById('report_type');
+    if (reportTypeSelect) {
+        reportTypeSelect.addEventListener('change', function() {
+            const individual = document.getElementById('individual_option');
+            const department = document.getElementById('department_option');
+            
+            individual.style.display = 'none';
+            department.style.display = 'none';
+            
+            if (this.value === 'individual') {
+                individual.style.display = 'block';
+            } else if (this.value === 'department') {
+                department.style.display = 'block';
+            }
+        });
     }
-});
 
-flatpickr("#date_range_container", {
-    mode: "range",
-    inline: true,
-    dateFormat: "Y-m-d",
-    onChange: function(selectedDates, dateStr, instance) {
-        document.getElementById('date_range').value = dateStr;
-    }
-});
+    // Initialize Date Range Picker
+    flatpickr("#date_range", {
+        mode: "range",
+        inline: true,
+        appendTo: document.getElementById('date_range_picker_container'),
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates, dateStr) {
+            // date_range input is updated automatically by flatpickr
+        }
+    });
 
-flatpickr("#adjustment_datetime_container", {
-    inline: true,
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-    onChange: function(selectedDates, dateStr, instance) {
-        document.getElementById('adjustment_datetime').value = dateStr;
-    }
+    // Initialize Manual Adjustment Picker
+    flatpickr("#adjustment_datetime", {
+        inline: true,
+        enableTime: true,
+        appendTo: document.getElementById('adjustment_datetime_picker_container'),
+        dateFormat: "Y-m-d H:i"
+    });
 });
 </script>
 

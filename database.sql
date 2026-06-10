@@ -43,3 +43,12 @@ INSERT INTO departments (name, head, am_arrival, am_departure, pm_arrival, pm_de
 ('Administrative', 'Juan Dela Cruz, Chief Admin Officer', '08:00:00', '12:00:00', '13:00:00', '17:00:00'),
 ('Finance', 'Maria Clara, Chief Finance Officer', '08:00:00', '12:00:00', '13:00:00', '17:00:00'),
 ('Operations', 'Crisostomo Ibarra, Operations Manager', '08:00:00', '12:00:00', '13:00:00', '17:00:00');
+
+-- Insert initial employees for testing
+INSERT INTO employees (name, id_num, employee_num, employee_type, department_id) VALUES
+('Alice Smith', '101', 'HR-2023-001', 'Regular', 1),
+('Bob Jones', '102', 'HR-2023-002', 'Contractual', 1),
+('Charlie Brown', '201', 'HR-2023-003', 'JO', 2),
+('David Miller', '301', 'HR-2023-004', 'Regular', 3),
+('Eve Adams', '401', 'HR-2023-005', 'Regular', 2),
+('Frank Wright', '501', 'HR-2023-006', 'Contractual', 3);

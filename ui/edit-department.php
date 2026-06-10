@@ -22,17 +22,17 @@ if (!$dept):
     <h2>Edit Department</h2>
     
     <form action="logic/process-department.php" method="POST">
-        <input type="hidden" name="department_id" value="<?php echo $dept['id']; ?>">
+        <input type="hidden" name="department_id" value="<?php echo htmlspecialchars($dept['id']); ?>">
         
         <div class="section-title">General Information</div>
         <div class="form-group">
             <label>Department Name:</label>
-            <input type="text" name="name" value="<?php echo htmlspecialchars($dept['name']); ?>" required>
+            <input type="text" name="name" value="<?php echo htmlspecialchars($dept['name'] ?? ''); ?>" required>
         </div>
 
         <div class="form-group">
             <label>Department Head:</label>
-            <input type="text" name="head" value="<?php echo htmlspecialchars($dept['head']); ?>" required>
+            <input type="text" name="head" value="<?php echo htmlspecialchars($dept['head'] ?? ''); ?>" required>
         </div>
 
         <div class="section-title">Update Official Time</div>
@@ -43,11 +43,11 @@ if (!$dept):
                 <div class="time-grid" style="margin-top: 10px;">
                     <div class="form-group">
                         <label>Arrival:</label>
-                        <input type="time" name="am_arrival" value="<?php echo substr($dept['am_arrival'], 0, 5); ?>">
+                        <input type="time" name="am_arrival" value="<?php echo substr($dept['am_arrival'] ?? '', 0, 5); ?>">
                     </div>
                     <div class="form-group">
                         <label>Departure:</label>
-                        <input type="time" name="am_departure" value="<?php echo substr($dept['am_departure'], 0, 5); ?>">
+                        <input type="time" name="am_departure" value="<?php echo substr($dept['am_departure'] ?? '', 0, 5); ?>">
                     </div>
                 </div>
             </div>
@@ -57,11 +57,11 @@ if (!$dept):
                 <div class="time-grid" style="margin-top: 10px;">
                     <div class="form-group">
                         <label>Arrival:</label>
-                        <input type="time" name="pm_arrival" value="<?php echo substr($dept['pm_arrival'], 0, 5); ?>">
+                        <input type="time" name="pm_arrival" value="<?php echo substr($dept['pm_arrival'] ?? '', 0, 5); ?>">
                     </div>
                     <div class="form-group">
                         <label>Departure:</label>
-                        <input type="time" name="pm_departure" value="<?php echo substr($dept['pm_departure'], 0, 5); ?>">
+                        <input type="time" name="pm_departure" value="<?php echo substr($dept['pm_departure'] ?? '', 0, 5); ?>">
                     </div>
                 </div>
             </div>

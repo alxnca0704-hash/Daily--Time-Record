@@ -4,7 +4,7 @@ require_once 'logic/db.php';
 // Fetch counts
 $emp_count = $pdo->query("SELECT COUNT(*) FROM employees")->fetchColumn();
 $dept_count = $pdo->query("SELECT COUNT(*) FROM departments")->fetchColumn();
-$log_count = $pdo->query("SELECT COUNT(*) FROM attendance_logs WHERE source = 'manual'")->fetchColumn();
+$log_count = $pdo->query("SELECT COUNT(*) FROM attendance_logs WHERE source = 'manual' AND log_timestamp >= CURDATE() AND log_timestamp < CURDATE() + INTERVAL 1 DAY")->fetchColumn();
 
 // Check DB connection status (already connected via db.php)
 $db_status = "Connected";

@@ -21,7 +21,7 @@ $departments = $stmt->fetchAll();
                 <select name="department_id" id="department_id">
                     <option value="new">-- Add New Department --</option>
                     <?php foreach ($departments as $dept): ?>
-                        <option value="<?php echo $dept['id']; ?>"><?php echo htmlspecialchars($dept['name']); ?></option>
+                        <option value="<?php echo htmlspecialchars($dept['id']); ?>"><?php echo htmlspecialchars($dept['name'] ?? ''); ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -143,12 +143,12 @@ document.querySelectorAll('.edit-dept-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         const dept = JSON.parse(this.getAttribute('data-dept'));
         document.getElementById('department_id').value = dept.id;
-        document.getElementById('dept_name').value = dept.name;
-        document.getElementById('dept_head').value = dept.head;
-        document.getElementById('am_arrival').value = dept.am_arrival.substring(0, 5);
-        document.getElementById('am_departure').value = dept.am_departure.substring(0, 5);
-        document.getElementById('pm_arrival').value = dept.pm_arrival.substring(0, 5);
-        document.getElementById('pm_departure').value = dept.pm_departure.substring(0, 5);
+        document.getElementById('dept_name').value = dept.name || '';
+        document.getElementById('dept_head').value = dept.head || '';
+        document.getElementById('am_arrival').value = (dept.am_arrival || '').substring(0, 5);
+        document.getElementById('am_departure').value = (dept.am_departure || '').substring(0, 5);
+        document.getElementById('pm_arrival').value = (dept.pm_arrival || '').substring(0, 5);
+        document.getElementById('pm_departure').value = (dept.pm_departure || '').substring(0, 5);
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
